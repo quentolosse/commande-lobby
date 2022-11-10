@@ -12,8 +12,6 @@ import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 
 public class CommandeLobby extends Plugin{
-    
-
 
     private Configuration configuration;
 
@@ -26,8 +24,12 @@ public class CommandeLobby extends Plugin{
             e.printStackTrace();
         }
 
-        ProxyServer.getInstance().getPluginManager().registerCommand(this, new Lobby(configuration));
+        Lobby commande = new Lobby(configuration);
+
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, commande);
+        getProxy().getPluginManager().registerListener(this, new EventListenerLobby(commande));
 
     }
+
 
 }
