@@ -24,4 +24,5 @@ min_player: 6
 - Autocomplétion du nom des joueurs
 - Erreur quand la commande est exécutée dans la console ou dans un command block
 - Envoi des joueurs qui se connectent au lobby
+
 Et pour finir le plus important : Plus de bug qui utilise beaucoup de CPU pour rien !
