@@ -17,12 +17,8 @@ Pour configurer `min_player`, changez le paramètre `min_player` dans le fichier
 #### Exemple de fichier `config.yml`:
 ```
 min_player: 6
+délai_update_lobby: 5
 ```
 
 ## Nouveautés
-- Couleurs dans les réponses
-- Autocomplétion du nom des joueurs
-- Erreur quand la commande est exécutée dans la console ou dans un command block
-- Envoi des joueurs qui se connectent au lobby
-
-Et pour finir le plus important : Plus de bug qui utilise beaucoup de CPU pour rien !
+- Correction du bug de détection de lobby
