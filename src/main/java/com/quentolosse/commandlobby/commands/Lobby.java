@@ -6,14 +6,14 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import net.md_5.bungee.api.Callback;
+import com.quentolosse.commandlobby.CommandeLobby;
+
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.connection.Server;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 import net.md_5.bungee.config.Configuration;
@@ -21,11 +21,13 @@ import net.md_5.bungee.config.Configuration;
 public class Lobby extends Command implements TabExecutor{
 
     int minPlayers;
+    CommandeLobby main;
 
-    public Lobby(Configuration config){
+    public Lobby(Configuration config, CommandeLobby main){
 
         super("Lobby", "", "hub");
         this.minPlayers = config.getInt("min_player");
+        this.main = main;
 
     }
 
@@ -89,43 +91,33 @@ public class Lobby extends Command implements TabExecutor{
 
     public String sendPlayerToLobby(ProxiedPlayer player){
 
-        Map<String, ServerInfo> serveurs = ProxyServer.getInstance().getServers();
-        final Map<String, Integer>[] serveursEtJoueurs = (Map<String, Integer>[]) new Map[1];
-        serveursEtJoueurs[0] = new HashMap<>();
-        for(final String name: serveurs.keySet()){
-
-            if (name.contains("hub") || name.contains("lobby")){
-                serveurs.get(name).ping(new Callback<ServerPing>() {
-                    
-                    @Override
-                    public void done(ServerPing result, Throwable error) {
-                        
-                        if (result != null) {
-                            serveursEtJoueurs[0].put(name, result.getPlayers().getOnline());
-                        }
-
-                    }
-                });
-
-            }
-
-        }
-        
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-
-
-        if (serveursEtJoueurs[0].isEmpty()) return "-1";
+        if (main.onlineLobbys.isEmpty()) return "-1";
 
         int minAuDessus = 1000 * 1000 * 1000, maxEnDessous = -1;
         String meilleurAuDessus = "", meilleurEnDessous = "";
+        Map<String, Integer> joueursParServeur = (Map<String, Integer>)new HashMap<String, Integer>();
 
-        for(final String name: serveursEtJoueurs[0].keySet()){
+        for(final String name: main.onlineLobbys){
 
-            int nbJoueurs = serveursEtJoueurs[0].get(name);
+            joueursParServeur.put(name, 0);
+
+        }
+
+        for (final ProxiedPlayer player1 : ProxyServer.getInstance().getPlayers()) {
+
+            Server serveur = player1.getServer();
+            if (serveur != null){
+                if (main.onlineLobbys.contains(serveur.getInfo().getName())) {
+                    joueursParServeur.put(serveur.getInfo().getName(), joueursParServeur.get(serveur.getInfo().getName() + 1));
+                }
+            }
+
+        }
+
+
+        for(final String name: joueursParServeur.keySet()){
+
+            int nbJoueurs = joueursParServeur.get(name);
             if (nbJoueurs >= this.minPlayers) {
                 if (minAuDessus > nbJoueurs) {
                     minAuDessus = nbJoueurs;
@@ -148,21 +140,8 @@ public class Lobby extends Command implements TabExecutor{
         else targetServer = meilleurAuDessus;
 
 
-        player.connect(ProxyServer.getInstance().getServerInfo(targetServer)/* , new Callback<Boolean>() {
-         
-            @Override
-            public void done(Boolean result, Throwable error) {
-                
-                if (result){
 
-                    player.
-
-                }
-
-            }
-
-        }*/);
-
+        player.connect(ProxyServer.getInstance().getServerInfo(targetServer));
 
         return targetServer;
 
