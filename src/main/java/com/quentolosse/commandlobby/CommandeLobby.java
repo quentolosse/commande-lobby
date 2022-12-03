@@ -60,7 +60,6 @@ public class CommandeLobby extends Plugin{
         }, 1, this.configuration.getInt("délai_update_lobby") , TimeUnit.SECONDS);
 
         getProxy().getPluginManager().registerCommand(this, commande);
-        getProxy().getPluginManager().registerListener(this, new EventListenerLobby(commande));
 
     }
 
