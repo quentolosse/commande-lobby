@@ -54,7 +54,7 @@ public class Lobby extends Command implements TabExecutor{
                         names = ret.split("lobby");
                     }
                     String num = names[1];
-                    sender.sendMessage(new ComponentBuilder("Vous avez été envoyé au lobby n°" + num + ".").color(ChatColor.GREEN).create());
+                    sender.sendMessage(new ComponentBuilder("Vous avez été envoyé au lobby" + num + ".").color(ChatColor.GREEN).create());
                 }
 
             }
@@ -93,8 +93,8 @@ public class Lobby extends Command implements TabExecutor{
                         names = ret.split("lobby");
                     }
                     String num = names[1];
-                    sender.sendMessage(new ComponentBuilder("Vous avez envoyé " + args[0] + " au lobby n°" + num + ".").color(ChatColor.GREEN).create());
-                    targetPlayer.sendMessage(new ComponentBuilder("Vous avez été envoyé au lobby n°" + num + ".").color(ChatColor.GREEN).create());
+                    sender.sendMessage(new ComponentBuilder("Vous avez envoyé " + args[0] + " au lobby" + num + ".").color(ChatColor.GREEN).create());
+                    targetPlayer.sendMessage(new ComponentBuilder("Vous avez été envoyé au lobby" + num + ".").color(ChatColor.GREEN).create());
                 }
             }
             else {
