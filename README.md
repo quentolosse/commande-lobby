@@ -21,4 +21,4 @@ délai_update_lobby: 5
 ```
 
 ## Nouveautés
-- Correction du bug de détection de lobby
+- Changement du message de téléportation
