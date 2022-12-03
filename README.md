@@ -20,5 +20,5 @@ min_player: 6
 délai_update_lobby: 5
 ```
 
-## Nouveautés
-- Changement du message de téléportation
+## Nouveautés 2.3
+- Plus d'envoi des joueurs au lobby lors de la connection
