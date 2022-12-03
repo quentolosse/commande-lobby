@@ -45,7 +45,17 @@ public class Lobby extends Command implements TabExecutor{
 
                 String ret = sendPlayerToLobby(player);
                 if (ret == "-1") sender.sendMessage(new ComponentBuilder("Aucun lobby disponible").color(ChatColor.RED).create());
-                else sender.sendMessage(new ComponentBuilder("Vous avez été téléporté au lobby").color(ChatColor.GREEN).create());
+                else {
+                    String[] names;
+                    if(ret.contains("hub")){
+                        names = ret.split("hub");
+                    } 
+                    else{
+                        names = ret.split("lobby");
+                    }
+                    String num = names[1];
+                    sender.sendMessage(new ComponentBuilder("Vous avez été envoyé au lobby n°" + num + ".").color(ChatColor.GREEN).create());
+                }
 
             }
             else sender.sendMessage(new ComponentBuilder("Seul un joueur peut se téléporter au lobby").color(ChatColor.RED).create());
@@ -72,10 +82,19 @@ public class Lobby extends Command implements TabExecutor{
                 }
                     
                 String ret = sendPlayerToLobby(targetPlayer);
+                
                 if (ret == "-1") sender.sendMessage(new ComponentBuilder("Aucun lobby disponible").color(ChatColor.RED).create());
                 else {
-                    sender.sendMessage(new ComponentBuilder("Vous avez téléporté " + args[0] + " au lobby").color(ChatColor.GREEN).create());
-                    targetPlayer.sendMessage(new ComponentBuilder("Vous avez été téléporté au lobby").color(ChatColor.GREEN).create());
+                    String[] names;
+                    if(ret.contains("hub")){
+                        names = ret.split("hub");
+                    } 
+                    else{
+                        names = ret.split("lobby");
+                    }
+                    String num = names[1];
+                    sender.sendMessage(new ComponentBuilder("Vous avez envoyé " + args[0] + " au lobby n°" + num + ".").color(ChatColor.GREEN).create());
+                    targetPlayer.sendMessage(new ComponentBuilder("Vous avez été envoyé au lobby n°" + num + ".").color(ChatColor.GREEN).create());
                 }
             }
             else {
