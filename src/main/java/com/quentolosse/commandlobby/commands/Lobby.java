@@ -136,7 +136,13 @@ public class Lobby extends Command implements TabExecutor{
 
         for(final String name: joueursParServeur.keySet()){
 
-            int nbJoueurs = joueursParServeur.get(name);
+            int nbJoueurs;
+            try {
+                nbJoueurs = joueursParServeur.get(name);
+            } catch (Exception e) {
+                nbJoueurs = 0;
+            }
+            
             if (nbJoueurs >= this.minPlayers) {
                 if (minAuDessus > nbJoueurs) {
                     minAuDessus = nbJoueurs;
