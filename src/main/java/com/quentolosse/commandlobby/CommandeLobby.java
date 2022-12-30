@@ -37,6 +37,7 @@ public class CommandeLobby extends Plugin{
             @Override
             public void run() {
 
+                onlineLobbys.clear();
                 Map<String, ServerInfo> serveurs = getProxy().getServers();
                 for(final String name: serveurs.keySet()){
 
