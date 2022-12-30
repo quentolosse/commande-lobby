@@ -20,5 +20,5 @@ min_player: 6
 délai_update_lobby: 5
 ```
 
-## Nouveautés 2.4
-- Correction du bug qui empêche de faire `/lobby`
+## Nouveautés 2.5
+- Correction du bug qui afichait `Téléportation au lobby` au lieu de `Aucun lobby disponible`
